@@ -3,13 +3,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Define the list of stocks to collect data for
-# BEGIN: 8j7f6h3d4k5s
+
 
 stocks = ['AAPL'] # Insert list of symbols to analyze
 
 
 
-# END: 8j7f6h3d4k5s
 
 # Create an empty dataframe to store the data
 stock_data = pd.DataFrame(columns=['Stock', 'Price', 'Momentum','PE Ratio'])
@@ -65,41 +64,7 @@ plt.legend()
 # Show the graph
 plt.show()
 
-# from alpha_vantage.timeseries import TimeSeries
-# from alpha_vantage.fundamentaldata import FundamentalData
-# import pandas as pd
-# # Replace with your Alpha Vantage API key
-# api_key = '0M44PX1Q9E2MYH14'
-# stock_data = pd.DataFrame(columns=['Stock', 'Price', 'PE Ratio', 'Momentum', 'Market Cap'])
-# # Define the stock symbol
-# stocks= ['GOOGL']  # Replace with the symbol of the stock you want to analyze
 
-# # Initialize the Alpha Vantage TimeSeries and FundamentalData objects
-# ts = TimeSeries(key=api_key, output_format='pandas')
-# fd = FundamentalData(key=api_key, output_format='pandas')
-
-
-# # Get real-time stock price
-# for stock in stocks:
-#     price_data, _ = ts.get_quote_endpoint(symbol=stock)
-#     current_price = price_data['05. price'].values[0]
-
-#     # Get historical data for the past month to calculate momentum
-#     historical_data, _ = ts.get_monthly(symbol=stock)
-#     start_price = historical_data.iloc[-2]['4. close']
-#     end_price = historical_data.iloc[-1]['4. close']
-#     momentum = end_price - start_price
-
-#     # Retrieve P/E ratio and market cap using an alternative source
-#     overview_data, _ = fd.get_company_overview(symbol=stock)
-#     pe_ratio = overview_data['PERatio'].values[0]
-#     market_cap = (overview_data['MarketCapitalization'].values[0])/1000000000
-
-#     stock_data = stock_data.append({'Stock': stock, 'Price': current_price, 'PE Ratio': pe_ratio, 'Momentum': momentum,  "Market Cap": market_cap}, ignore_index=True)
-
-#     # print(f"Stock Symbol: {stock}")
-#     # print(f"Current Price: {current_price}")
-#     # print(f"Momentum (1 month): {momentum}")
 #     # print(f"P/E Ratio: {pe_ratio}")
 #     # print(f"Market Cap: {market_cap}")
 
