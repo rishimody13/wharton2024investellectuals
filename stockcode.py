@@ -5,7 +5,9 @@ from yahoo_fin import stock_info as si
 # Define the list of stocks to collect data for
 
 
-stocks = ['AAPL', 'TSLA', 'MSFT', 'GOOGL','NVDA', 'META', 'NFLX', 'INTC', 'AMZN'] # Insert list of symbols to analyze
+stocks = ['SPY', 'IVV', 'VOO', 'VTI', 'QQQ', 'VTV', 'VUG', 'IWF', 'VIG', 'IJH', 'IJR']
+
+#stocks = ['AAPL', 'TSLA', 'MSFT', 'GOOGL','NVDA', 'META', 'NFLX', 'INTC', 'AMZN'] # Insert list of symbols to analyze
 
 
 
@@ -44,44 +46,46 @@ for stock in stocks:
 # 'Market Cap (Billions)': market_cap
        
 # Export the data to an excel sheet
-stock_data.to_excel('gitstockdata.xlsx', index=False)
+stock_data.to_excel('stockdata.xlsx', index=False)
 
 #GRAPHING
 
 # Generate a graph of the stock price over 5 months for each stock
-# for stock in stocks:
-#     # Collect the data using yfinance
-#     stock_df = yf.download(stock, period='5mo', interval='1d')
-    
-#     # Plot the data
-#     plt.plot(stock_df['Close'], label=stock)
-    
-# # Add labels and legend to the graph
-# plt.title('Stock Price over 5 Months')
-# plt.xlabel('Date')
-# plt.ylabel('Price')
-# plt.legend()
+def fivemonthpricechange():
+    for stock in stocks:
+        # Collect the data using yfinance
+        stock_df = yf.download(stock, period='5mo', interval='1d')
+        
+        # Plot the data
+        plt.plot(stock_df['Close'], label=stock)
+        
+    # Add labels and legend to the graph
+    plt.title('Stock Price over 5 Months')
+    plt.xlabel('Date')
+    plt.ylabel('Price')
+    plt.legend()
 
-# # Show the graph
-# plt.show()
+    # Show the graph
+    plt.show()
 
 
 #generate graphs for percentage change
-for stock in stocks:
-    # Collect the data using yfinance
-    stock_df = yf.download(stock, period='6mo', interval='1d')
-    
-    # Calculate the percentage change
-    stock_df['Percentage Change'] = (stock_df['Close'] - stock_df['Close'].iloc[0]) / stock_df['Close'].iloc[0] * 100
-    
-    # Plot the percentage change
-    plt.plot(stock_df.index, stock_df['Percentage Change'], label=stock)
+def sixmonthpercentagechange():
+    for stock in stocks:
+        # Collect the data using yfinance
+        stock_df = yf.download(stock, period='6mo', interval='1d')
+        
+        # Calculate the percentage change
+        stock_df['Percentage Change'] = (stock_df['Close'] - stock_df['Close'].iloc[0]) / stock_df['Close'].iloc[0] * 100
+        
+        # Plot the percentage change
+        plt.plot(stock_df.index, stock_df['Percentage Change'], label=stock)
 
-# Add labels and legend to the graph
-plt.title('Percentage Price Change Over 6 months')
-plt.xlabel('Date')
-plt.ylabel('Percentage Change')
-plt.legend()
+    # Add labels and legend to the graph
+    plt.title('Percentage Price Change Over 6 months')
+    plt.xlabel('Date')
+    plt.ylabel('Percentage Change')
+    plt.legend()
 
-# Show the graph
-plt.show()
+    # Show the graph
+    plt.show()
