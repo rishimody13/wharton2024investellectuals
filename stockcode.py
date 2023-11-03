@@ -5,9 +5,9 @@ from yahoo_fin import stock_info as si
 import time
 # Define the list of stocks to collect data for
 
-stocks = ['VIG', 'ESGV', 'VEU', 'VEA', 'VWO', 'VGK', 'VUG', 'VHT', 'VYM', 'VGT', 'VCIT', 'VO', 'VNQ', 'VOO', 'VCSH', 'BSV', 'VGSH', 'VTEB', 'BND', 'BNDX', 'VXUS', 'VTI', 'VTV']
+#stocks = ['VUG', 'VOO', 'VGT']
 
-#stocks = ['AAPL', 'TSLA', 'MSFT', 'GOOGL','NVDA', 'META', 'NFLX', 'INTC', 'AMZN'] # Insert list of symbols to analyze
+stocks = ['AAPL', 'TSLA', 'MSFT', 'GOOGL','NVDA', 'META', 'NFLX', 'INTC', 'AMZN', 'ORCL'] # Insert list of symbols to analyze
 
 
 
@@ -30,7 +30,7 @@ for stock in stocks:
     
     #FIRST ALTERNATIVE FOR PE
     quote = si.get_quote_table(stock)
-    print(quote)
+    
     pe_ratio = quote["PE Ratio (TTM)"]
     
     #OTHER ALTERNTIVE FOR PE
