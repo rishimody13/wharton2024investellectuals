@@ -29,33 +29,33 @@ for stock in stocks:
     # MCAP -> market_cap = (stock_info['marketCap'])/1000000000
     
     
-    # PE RATIO -> quote = si.get_quote_table(stock)
-    # print(quote)
-    # pe_ratio = quote["PE Ratio (TTM)"]
+    quote = si.get_quote_table(stock)
+    print(quote)
+    pe_ratio = quote["PE Ratio (TTM)"]
     
-    attempt = 1
-    time.sleep(3)
-    error = False
-    try:
-        val = si.get_stats_valuation(stock)
-        print(f"{stock} loaded on first attempt")
-    except:
-        error = True
-        attempt += 1
-        while error == True:
-            print(f"Sleeping {attempt*10}s")
-            time.sleep(attempt*10)
-            try:
-                x = si.get_stats_valuation(stock)
-                error = False
-                print(f"{stock}, succesful on attempt {attempt}")
-            except:
-                attempt += 1
-                print(f"{stock}, failed. Attempt {attempt}") 
-    # val = si.get_stats_valuation(stock)
-    val = val.iloc[:,:2]
-    val.columns = ["Attribute", "Recent"]
-    pe_ratio = float(val[val.Attribute.str.contains("Trailing P/E")].iloc[0,1])
+    # attempt = 1
+    # time.sleep(3)
+    # error = False
+    # try:
+    #     val = si.get_stats_valuation(stock)
+    #     print(f"{stock} loaded on first attempt")
+    # except:
+    #     error = True
+    #     attempt += 1
+    #     while error == True:
+    #         print(f"Sleeping {attempt*10}s")
+    #         time.sleep(attempt*10)
+    #         try:
+    #             x = si.get_stats_valuation(stock)
+    #             error = False
+    #             print(f"{stock}, succesful on attempt {attempt}")
+    #         except:
+    #             attempt += 1
+    #             print(f"{stock}, failed. Attempt {attempt}") 
+    # # val = si.get_stats_valuation(stock)
+    # val = val.iloc[:,:2]
+    # val.columns = ["Attribute", "Recent"]
+    # pe_ratio = float(val[val.Attribute.str.contains("Trailing P/E")].iloc[0,1])
      
 
     # Add the data to the dataframe
