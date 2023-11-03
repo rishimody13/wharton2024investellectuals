@@ -5,8 +5,8 @@ from yahoo_fin import stock_info as si
 import time
 # Define the list of stocks to collect data for
 
+stocks = ['VIG', 'ESGV', 'VEU', 'VEA', 'VWO', 'VGK', 'VUG', 'VHT', 'VYM', 'VGT', 'VCIT', 'VO', 'VNQ', 'VOO', 'VCSH', 'BSV', 'VGSH', 'VTEB', 'BND', 'BNDX', 'VXUS', 'VTI', 'VTV']
 
-stocks = ['IVV', 'VOO', 'VTI', 'QQQ', 'VTV', 'VUG', 'IWF', 'VIG', 'IJH', 'IJR']
 #stocks = ['AAPL', 'TSLA', 'MSFT', 'GOOGL','NVDA', 'META', 'NFLX', 'INTC', 'AMZN'] # Insert list of symbols to analyze
 
 
@@ -28,11 +28,12 @@ for stock in stocks:
 
     # MCAP -> market_cap = (stock_info['marketCap'])/1000000000
     
-    
+    #FIRST ALTERNATIVE FOR PE
     quote = si.get_quote_table(stock)
     print(quote)
     pe_ratio = quote["PE Ratio (TTM)"]
     
+    #OTHER ALTERNTIVE FOR PE
     # attempt = 1
     # time.sleep(3)
     # error = False
