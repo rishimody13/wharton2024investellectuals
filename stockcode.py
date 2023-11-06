@@ -6,7 +6,7 @@ import time
 # Define the list of stocks to collect data for
 
 #ALL ETFS
-stocks = ['MSOS', 'ARKK', 'AVUV', 'LCTU', 'XLC', 'XLY', 'XLP', 'XLE', 'XLF', 'GRID', 'FAN', 'PAVE', 'XLV', 'XLI', 'QQQ', 'RSP', 'TAN', 'PHO', 'PBW', 'SHY', 'IGSB', 'TLT', 'IEF', 'IBB', 'DGRO', 'IEFA', 'IEMG', 'IVV', 'IJH', 'IJR', 'IUSB', 'AGG', 'ESGU', 'ICLN', 'HYG', 'LQD', 'ESGE', 'EMB', 'MBB', 'EWA', 'EWZ', 'MCHI', 'EFA', 'INDA', 'DSI', 'EWW', 'EWT', 'USMV', 'MTUM', 'QUAL', 'MUB', 'IWF', 'IWD', 'IWM', 'SHV', 'TIP', 'ESGD', 'ITA', 'GOVT', 'IYW', 'BBCA', 'JEPI', 'JPST', 'COWZ', 'NOBL', 'IPO', 'SCHD', 'BIL', 'SPY', 'XLK', 'XLU', 'MOAT', 'SMH', 'VIG', 'ESGV', 'VEU', 'VEA', 'VWO', 'VGK', 'VUG', 'VHT', 'VYM', 'VGT', 'VCIT', 'VO', 'VNQ', 'VOO', 'VCSH', 'BSV', 'VGSH', 'VTEB', 'BND', 'BNDX', 'VXUS', 'VTI', 'VTV']
+stocks = ['MSOS', 'ARKK', 'AVUV', 'LCTU', 'XLC', 'SPY', 'XLY', 'XLP', 'XLE', 'XLF', 'GRID', 'FAN', 'PAVE', 'XLV', 'XLI', 'QQQ', 'RSP', 'TAN', 'PHO', 'PBW', 'SHY', 'IGSB', 'TLT', 'IEF', 'IBB', 'DGRO', 'IEFA', 'IEMG', 'IVV', 'IJH', 'IJR', 'IUSB', 'AGG', 'ESGU', 'ICLN', 'HYG', 'LQD', 'ESGE', 'EMB', 'MBB', 'EWA', 'EWZ', 'MCHI', 'EFA', 'INDA', 'DSI', 'EWW', 'EWT', 'USMV', 'MTUM', 'QUAL', 'MUB', 'IWF', 'IWD', 'IWM', 'SHV', 'TIP', 'ESGD', 'ITA', 'GOVT', 'IYW', 'BBCA', 'JEPI', 'JPST', 'COWZ', 'NOBL', 'IPO', 'SCHD', 'BIL', 'XLK', 'XLU', 'MOAT', 'SMH', 'VIG', 'ESGV', 'VEU', 'VEA', 'VWO', 'VGK', 'VUG', 'VHT', 'VYM', 'VGT', 'VCIT', 'VO', 'VNQ', 'VOO', 'VCSH', 'BSV', 'VGSH', 'VTEB', 'BND', 'BNDX', 'VXUS', 'VTI', 'VTV']
 
 
 #stocks = ['AAPL', 'TSLA', 'MSFT', 'GOOGL','NVDA', 'META', 'NFLX', 'INTC', 'AMZN', 'ORCL'] # Insert list of symbols to analyze
@@ -21,21 +21,23 @@ stock_data = pd.DataFrame(columns=['Stock', 'Price', 'Momentum','PE Ratio', 'Per
 # Loop through each stock and collect the data
 for stock in stocks:
     
-    #Collect data using yfinance
     stock_price = yf.Ticker(stock).history(period="1d")["Close"][0]
     historical_data = yf.Ticker(stock).history(period="1y")
     start_price = historical_data["Close"][0]
     end_price = historical_data["Close"][-1]
     momentum = end_price - start_price
 
-    # MCAP -> market_cap = (stock_info['marketCap'])/1000000000
+    # MCAP
+    # market_cap = (stock_info['marketCap'])/1000000000
     
     #FIRST ALTERNATIVE FOR PE
-    quote = si.get_quote_table(stock)
+    try:
+        quote = si.get_quote_table(stock)
+        pe_ratio = quote["PE Ratio (TTM)"]
+    except:
+        print("Error for stock: ", stock)
     
-    pe_ratio = quote["PE Ratio (TTM)"]
-    
-    #OTHER ALTERNTIVE FOR PE
+    #SECOND ALTERNTIVE FOR PE
     # attempt = 1
     # time.sleep(3)
     # error = False
@@ -61,13 +63,14 @@ for stock in stocks:
     # pe_ratio = float(val[val.Attribute.str.contains("Trailing P/E")].iloc[0,1])
      
     percent_change = (momentum/(stock_price - momentum))*100
-
+    
     # Add the data to the dataframe
     stock_data = stock_data.append({'Stock': stock, 'Price': stock_price,  'Momentum': momentum, 'PE Ratio': pe_ratio, 'Percent Change': percent_change}, ignore_index=True)
 
        
 # Export the data to an excel sheet
 stock_data.to_excel('stockdata.xlsx', index=False)
+print("Export to Excel Complete")
 
 #GRAPHING
 
@@ -76,7 +79,6 @@ def fivemonthpricechange():
     for stock in stocks:
         # Collect the data using yfinance
         stock_df = yf.download(stock, period='5mo', interval='1d')
-        
         # Plot the data
         plt.plot(stock_df['Close'], label=stock)
         
@@ -85,21 +87,14 @@ def fivemonthpricechange():
     plt.xlabel('Date')
     plt.ylabel('Price')
     plt.legend()
-
-    # Show the graph
     plt.show()
 
 
 #generate graphs for percentage change
 def sixmonthpercentagechange():
     for stock in stocks:
-        # Collect the data using yfinance
         stock_df = yf.download(stock, period='6mo', interval='1d')
-        
-        # Calculate the percentage change
         stock_df['Percentage Change'] = (stock_df['Close'] - stock_df['Close'].iloc[0]) / stock_df['Close'].iloc[0] * 100
-        
-        # Plot the percentage change
         plt.plot(stock_df.index, stock_df['Percentage Change'], label=stock)
 
     # Add labels and legend to the graph
@@ -107,8 +102,6 @@ def sixmonthpercentagechange():
     plt.xlabel('Date')
     plt.ylabel('Percentage Change')
     plt.legend()
-
-    # Show the graph
     plt.show()
 
 
