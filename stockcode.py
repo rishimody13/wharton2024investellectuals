@@ -5,16 +5,18 @@ from yahoo_fin import stock_info as si
 import time
 # Define the list of stocks to collect data for
 
-#stocks = ['VUG', 'VOO', 'VGT']
+#ALL ETFS
+stocks = ['MSOS', 'ARKK', 'AVUV', 'LCTU', 'XLC', 'XLY', 'XLP', 'XLE', 'XLF', 'GRID', 'FAN', 'PAVE', 'XLV', 'XLI', 'QQQ', 'RSP', 'TAN', 'PHO', 'PBW', 'SHY', 'IGSB', 'TLT', 'IEF', 'IBB', 'DGRO', 'IEFA', 'IEMG', 'IVV', 'IJH', 'IJR', 'IUSB', 'AGG', 'ESGU', 'ICLN', 'HYG', 'LQD', 'ESGE', 'EMB', 'MBB', 'EWA', 'EWZ', 'MCHI', 'EFA', 'INDA', 'DSI', 'EWW', 'EWT', 'USMV', 'MTUM', 'QUAL', 'MUB', 'IWF', 'IWD', 'IWM', 'SHV', 'TIP', 'ESGD', 'ITA', 'GOVT', 'IYW', 'BBCA', 'JEPI', 'JPST', 'COWZ', 'NOBL', 'IPO', 'SCHD', 'BIL', 'SPY', 'XLK', 'XLU', 'MOAT', 'SMH', 'VIG', 'ESGV', 'VEU', 'VEA', 'VWO', 'VGK', 'VUG', 'VHT', 'VYM', 'VGT', 'VCIT', 'VO', 'VNQ', 'VOO', 'VCSH', 'BSV', 'VGSH', 'VTEB', 'BND', 'BNDX', 'VXUS', 'VTI', 'VTV']
 
-stocks = ['AAPL', 'TSLA', 'MSFT', 'GOOGL','NVDA', 'META', 'NFLX', 'INTC', 'AMZN', 'ORCL'] # Insert list of symbols to analyze
+
+#stocks = ['AAPL', 'TSLA', 'MSFT', 'GOOGL','NVDA', 'META', 'NFLX', 'INTC', 'AMZN', 'ORCL'] # Insert list of symbols to analyze
 
 
 
 
 
 # Create an empty dataframe to store the data
-stock_data = pd.DataFrame(columns=['Stock', 'Price', 'Momentum','PE Ratio'])
+stock_data = pd.DataFrame(columns=['Stock', 'Price', 'Momentum','PE Ratio', 'Percent Change'])
 
 # Loop through each stock and collect the data
 for stock in stocks:
@@ -58,10 +60,10 @@ for stock in stocks:
     # val.columns = ["Attribute", "Recent"]
     # pe_ratio = float(val[val.Attribute.str.contains("Trailing P/E")].iloc[0,1])
      
+    percent_change = (momentum/(stock_price - momentum))*100
 
     # Add the data to the dataframe
-    
-    stock_data = stock_data.append({'Stock': stock, 'Price': stock_price,  'Momentum': momentum, 'PE Ratio': pe_ratio}, ignore_index=True)
+    stock_data = stock_data.append({'Stock': stock, 'Price': stock_price,  'Momentum': momentum, 'PE Ratio': pe_ratio, 'Percent Change': percent_change}, ignore_index=True)
 
        
 # Export the data to an excel sheet
@@ -109,4 +111,4 @@ def sixmonthpercentagechange():
     # Show the graph
     plt.show()
 
-fivemonthpricechange()
+
