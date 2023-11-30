@@ -6,7 +6,7 @@ import time
 # Define the list of stocks to collect data for
 
 #ALL ETFS
-stocks = ['MSOS', 'ARKK', 'AVUV', 'LCTU', 'XLC', 'SPY', 'XLY', 'XLP', 'XLE', 'XLF', 'GRID', 'FAN', 'PAVE', 'XLV', 'XLI', 'QQQ', 'RSP', 'TAN', 'PHO', 'PBW', 'SHY', 'IGSB', 'TLT', 'IEF', 'IBB', 'DGRO', 'IEFA', 'IEMG', 'IVV', 'IJH', 'IJR', 'IUSB', 'AGG', 'ESGU', 'ICLN', 'HYG', 'LQD', 'ESGE', 'EMB', 'MBB', 'EWA', 'EWZ', 'MCHI', 'EFA', 'INDA', 'DSI', 'EWW', 'EWT', 'USMV', 'MTUM', 'QUAL', 'MUB', 'IWF', 'IWD', 'IWM', 'SHV', 'TIP', 'ESGD', 'ITA', 'GOVT', 'IYW', 'BBCA', 'JEPI', 'JPST', 'COWZ', 'NOBL', 'IPO', 'SCHD', 'BIL', 'XLK', 'XLU', 'MOAT', 'SMH', 'VIG', 'ESGV', 'VEU', 'VEA', 'VWO', 'VGK', 'VUG', 'VHT', 'VYM', 'VGT', 'VCIT', 'VO', 'VNQ', 'VOO', 'VCSH', 'BSV', 'VGSH', 'VTEB', 'BND', 'BNDX', 'VXUS', 'VTI', 'VTV']
+stocks = ['VIG', 'ESGV', 'VEU', 'VEA', 'VWO', 'VGK', 'VUG', 'VHT', 'VYM', 'VGT', 'VCIT', 'VO', 'VNQ', 'VOO', 'VCSH', 'BSV', 'VGSH', 'VTEB', 'BND', 'BNDX', 'VXUS', 'VTI', 'VTV']
 
 
 #stocks = ['AAPL', 'TSLA', 'MSFT', 'GOOGL','NVDA', 'META', 'NFLX', 'INTC', 'AMZN', 'ORCL'] # Insert list of symbols to analyze
@@ -66,7 +66,7 @@ for stock in stocks:
     
     # Add the data to the dataframe
     stock_data = stock_data.append({'Stock': stock, 'Price': stock_price,  'Momentum': momentum, 'PE Ratio': pe_ratio, 'Percent Change': percent_change}, ignore_index=True)
-
+    print("Data Collected for ", stock)
        
 # Export the data to an excel sheet
 stock_data.to_excel('stockdata.xlsx', index=False)
@@ -75,10 +75,10 @@ print("Export to Excel Complete")
 #GRAPHING
 
 # Generate a graph of the stock price over 5 months for each stock
-def fivemonthpricechange():
+def oneyearpricechange():
     for stock in stocks:
         # Collect the data using yfinance
-        stock_df = yf.download(stock, period='5mo', interval='1d')
+        stock_df = yf.download(stock, period='1y', interval='1d')
         # Plot the data
         plt.plot(stock_df['Close'], label=stock)
         
@@ -103,5 +103,5 @@ def sixmonthpercentagechange():
     plt.ylabel('Percentage Change')
     plt.legend()
     plt.show()
-
+oneyearpricechange()
 
