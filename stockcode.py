@@ -6,11 +6,11 @@ import time
 # Define the list of stocks to collect data for
 
 #ALL ETFS
-stocks = ['VIG', 'ESGV', 'VEU', 'VEA', 'VWO', 'VGK', 'VUG', 'VHT', 'VYM', 'VGT', 'VCIT', 'VO', 'VNQ', 'VOO', 'VCSH', 'BSV', 'VGSH', 'VTEB', 'BND', 'BNDX', 'VXUS', 'VTI', 'VTV']
+#stocks = ['VIG', 'ESGV', 'VEU', 'VEA', 'VWO', 'VGK', 'VUG', 'VHT', 'VYM', 'VGT', 'VCIT', 'VO', 'VNQ', 'VOO', 'VCSH', 'BSV', 'VGSH', 'VTEB', 'BND', 'BNDX', 'VXUS', 'VTI', 'VTV']
 
 
 #stocks = ['AAPL', 'TSLA', 'MSFT', 'GOOGL','NVDA', 'META', 'NFLX', 'INTC', 'AMZN', 'ORCL'] # Insert list of symbols to analyze
-
+stocks = ['COALINDIA.NS', 'TITAN.NS', 'MSFT', 'LULU', 'TATASTEEL.NS', 'VGT', 'MULT3F.SA', 'AAPL', 'XLK', 'NFLX', 'SMH', 'SPY', 'TSLA','XLY', 'QQQ', 'VUG', 'NVDA']
 
 
 
@@ -63,6 +63,9 @@ for stock in stocks:
     # pe_ratio = float(val[val.Attribute.str.contains("Trailing P/E")].iloc[0,1])
      
     percent_change = (momentum/(stock_price - momentum))*100
+    #fetch market cap
+    # stock_info = si.get_quote_table(stock)
+    # market_cap = stock_info['Market Cap']
     
     # Add the data to the dataframe
     stock_data = stock_data.append({'Stock': stock, 'Price': stock_price,  'Momentum': momentum, 'PE Ratio': pe_ratio, 'Percent Change': percent_change}, ignore_index=True)
@@ -83,7 +86,7 @@ def oneyearpricechange():
         plt.plot(stock_df['Close'], label=stock)
         
     # Add labels and legend to the graph
-    plt.title('Stock Price over 5 Months')
+    plt.title('Stock Price over 1 year')
     plt.xlabel('Date')
     plt.ylabel('Price')
     plt.legend()
@@ -103,5 +106,5 @@ def sixmonthpercentagechange():
     plt.ylabel('Percentage Change')
     plt.legend()
     plt.show()
-oneyearpricechange()
+sixmonthpercentagechange()
 
