@@ -1,4 +1,4 @@
-# Wharton Investing Challenge 2023 - Team Investellectuals
+# Wharton Investing Challenge 2024 - Team Investellectuals
 > Code to Analyse Stock Behaviour for the Wharton 2023 Investing Competition
 
 - We utilized the Yahoo Finance API to help us analyze stock behavior and market trends. 
