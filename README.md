@@ -1,5 +1,5 @@
 # Wharton Investing Challenge 2024 - Team Investellectuals
-> Code to Analyse Stock Behaviour for the Wharton 2023 Investing Competition
+> Code to Analyse Stock Behaviour for the Wharton 2024 Investing Competition
 
 - We utilized the Yahoo Finance API to help us analyze stock behavior and market trends. 
 - Our parameters were current stock price, short and long momentum, P/E ratio, and market capitalization, all of which helped us analyze our stocks.
